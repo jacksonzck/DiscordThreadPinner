@@ -4,6 +4,10 @@ const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
+if (!fs.existsSync("data/")) {
+	fs.mkdirSync("data/")
+}
+
 client.commands = new Collection();
 const commandFolder = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandFolder).filter(file => file.endsWith('.js'));
