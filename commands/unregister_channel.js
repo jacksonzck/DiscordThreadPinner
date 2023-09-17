@@ -9,6 +9,13 @@ module.exports = {
 	 * @param {ChatInputCommandInteraction} interaction
 	 */
 	async execute(interaction) {
+        // Find what base channel we're operating in.
+		if (interaction.channel.isThread()) {
+			channel_id = interaction.channel.parentId
+		} else {
+			channel_id = interaction.channelId
+		} 
+
 		// Check to see if the original caller has permissions to pin messages in this channel.  
 		const permissions = interaction.channel.permissionsFor(interaction.member)
 		if (!permissions.has(PermissionsBitField.Flags.ManageMessages)) {
@@ -22,7 +29,7 @@ module.exports = {
 			fs.writeFileSync(filepath, "{}")
 		}
 		guildInformation = JSON.parse(fs.readFileSync(filepath))	
-		delete guildInformation[interaction.channelId]
+		delete guildInformation[channel_id]
 		fs.writeFileSync(filepath, JSON.stringify(guildInformation))
         await interaction.reply({content: "Unregistered channel successfully.", ephemeral: true})
 	},
