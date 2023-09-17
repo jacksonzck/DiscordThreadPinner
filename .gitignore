@@ -132,3 +132,6 @@ dist
 .env
 my_notes.md
 *.pdf
+
+# Data
+data/*
