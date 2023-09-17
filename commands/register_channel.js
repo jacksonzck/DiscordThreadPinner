@@ -1,10 +1,12 @@
-const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('register_channel')
-		.setDescription('Registers the channel to enable user thread pinning.'),
+		.setDescription('Registers the channel to enable user thread pinning.')
+		.setDMPermission(false)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 	/**
 	 * @param {ChatInputCommandInteraction} interaction
 	 */
@@ -30,8 +32,7 @@ module.exports = {
 
 		// Make guild data if it didn't exist before.
 		const filepath = "data/" + interaction.guildId + ".json"
-        if (fs.existsSync(filepath)) {
-		} else {
+        if (!fs.existsSync(filepath)) {
 			fs.writeFileSync(filepath, "{}")
 		}
 		guildInformation = JSON.parse(fs.readFileSync(filepath))
