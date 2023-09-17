@@ -1,10 +1,12 @@
-const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, ChatInputCommandInteraction, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
 const fs = require('fs')
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('unregister_channel')
-		.setDescription('Unregisters the channel from user thread pinning.'),
+		.setDescription('Unregisters the channel from user thread pinning.')
+        .setDMPermission(false)
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages),
 	/**
 	 * @param {ChatInputCommandInteraction} interaction
 	 */
